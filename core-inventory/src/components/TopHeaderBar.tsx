@@ -1,9 +1,11 @@
 import { Search, Bell, Settings, User } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { cn } from "../lib/utils";
 
 export function TopHeaderBar() {
   const [isAvatarOpen, setIsAvatarOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <header className="h-16 px-6 bg-white border-b border-borders flex items-center justify-between shrink-0 sticky top-0 z-10">
@@ -48,14 +50,14 @@ export function TopHeaderBar() {
               </div>
               <button 
                 className="w-full text-left px-4 py-2 text-sm text-text-primary hover:bg-background flex items-center gap-2 transition-colors"
-                onClick={() => setIsAvatarOpen(false)}
+                onClick={() => { setIsAvatarOpen(false); navigate('/profile'); }}
               >
                 <User className="h-4 w-4 text-text-secondary" />
                 My Profile
               </button>
               <button 
                 className="w-full text-left px-4 py-2 text-sm text-text-primary hover:bg-background flex items-center gap-2 transition-colors"
-                onClick={() => setIsAvatarOpen(false)}
+                onClick={() => { setIsAvatarOpen(false); navigate('/settings'); }}
               >
                 <Settings className="h-4 w-4 text-text-secondary" />
                 Settings
@@ -63,7 +65,11 @@ export function TopHeaderBar() {
               <div className="h-px bg-borders my-1" />
               <button 
                 className="w-full text-left px-4 py-2 text-sm text-critical hover:bg-critical/5 flex items-center gap-2 transition-colors"
-                onClick={() => setIsAvatarOpen(false)}
+                onClick={() => { 
+                  setIsAvatarOpen(false); 
+                  localStorage.removeItem('token');
+                  navigate('/login'); 
+                }}
               >
                 Logout
               </button>

@@ -1,4 +1,4 @@
-import { Plus, Search, Filter, MoreVertical, Edit2, Eye, Trash2 } from "lucide-react";
+import { Plus, Search, Filter, Edit2, Eye, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 const products = [

@@ -8,7 +8,7 @@ import {
   SlidersHorizontal,
   History,
   Building2,
-  User,
+  Settings2,
   LogOut,
   ChevronLeft,
   ChevronRight,
@@ -32,7 +32,7 @@ const operationLinks = [
 const bottomLinks = [
   { name: "Move History", href: "/move-history", icon: History },
   { name: "Warehouses", href: "/warehouses", icon: Building2 },
-  { name: "Profile", href: "/profile", icon: User },
+  { name: "Settings", href: "/settings", icon: Settings2 },
 ];
 
 export function SidebarNavigation() {
