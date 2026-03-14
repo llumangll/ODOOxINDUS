@@ -10,6 +10,8 @@ import { InventoryAdjustment } from "./pages/InventoryAdjustment";
 import { MoveHistory } from "./pages/MoveHistory";
 import { WarehouseSettings } from "./pages/WarehouseSettings";
 import { UserProfile } from "./pages/UserProfile";
+import { ReceiptDetail } from "./pages/ReceiptDetail";
+import { DeliveryOrderDetail } from "./pages/DeliveryOrderDetail";
 
 export default function App() {
   return (
@@ -22,7 +24,9 @@ export default function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="products" element={<Products />} />
           <Route path="receipts" element={<Receipts />} />
+          <Route path="receipt/:id" element={<ReceiptDetail />} />
           <Route path="deliveries" element={<DeliveryOrders />} />
+          <Route path="delivery/:id" element={<DeliveryOrderDetail />} />
           <Route path="transfers" element={<InternalTransfers />} />
           <Route path="adjustments" element={<InventoryAdjustment />} />
           <Route path="move-history" element={<MoveHistory />} />
