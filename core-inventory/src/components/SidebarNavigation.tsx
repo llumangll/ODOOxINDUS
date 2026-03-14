@@ -19,7 +19,7 @@ import { useState } from "react";
 
 const mainLinks = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Products", href: "/products", icon: Package },
+  { name: "Stock", href: "/products", icon: Package },
 ];
 
 const operationLinks = [
