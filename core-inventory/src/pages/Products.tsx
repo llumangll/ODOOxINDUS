@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import { Search } from "lucide-react";
 import { useState, useEffect } from "react";
+=======
+import { Plus, Search, Filter, Edit2, Eye, Trash2 } from "lucide-react";
+import { useState } from "react";
+>>>>>>> origin/priyansh-local
 
 interface StockItem {
   id: number;
