@@ -1,5 +1,5 @@
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface StockItem {
   id: number;
@@ -9,24 +9,31 @@ interface StockItem {
   freeToUse: number;
 }
 
-const initialStock: StockItem[] = [
-  { id: 1, product: "Desk", perUnitCost: 3000, onHand: 50, freeToUse: 45 },
-  { id: 2, product: "Table", perUnitCost: 3000, onHand: 50, freeToUse: 50 },
-  { id: 3, product: "Chair", perUnitCost: 1500, onHand: 120, freeToUse: 110 },
-  { id: 4, product: "Monitor", perUnitCost: 12000, onHand: 30, freeToUse: 28 },
-  { id: 5, product: "Keyboard", perUnitCost: 800, onHand: 200, freeToUse: 195 },
-];
-
 export function Products() {
-  const stockData = initialStock;
+  const [stockData, setStockData] = useState<StockItem[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    fetchStock();
+  }, []);
+
+  const fetchStock = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch("/api/stock");
+      const data = await res.json();
+      setStockData(data);
+    } catch (err) {
+      console.error("Failed to fetch stock:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filtered = stockData.filter((item) =>
     item.product.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
@@ -68,44 +75,46 @@ export function Products() {
               </tr>
             </thead>
             <tbody>
-              {filtered.map((item) => (
-                <tr
-                  key={item.id}
-                  className="border-b border-dashed border-borders/60 hover:bg-background/50 transition-colors group"
-                >
-                  <td className="px-6 py-4 font-medium text-text-primary text-sm">
-                    {item.product}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-text-primary">
-                    <span>{item.perUnitCost.toLocaleString()} Rs</span>
-                  </td>
-                  <td className="px-6 py-4 text-center text-sm">
-                    <span className="font-semibold text-text-primary">
-                      {item.onHand}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-center text-sm">
-                    <span className="font-semibold text-text-primary">
-                      {item.freeToUse}
-                    </span>
+              {loading ? (
+                <tr>
+                  <td colSpan={4} className="px-6 py-12 text-center text-text-secondary text-sm">
+                    Loading stock data...
                   </td>
                 </tr>
-              ))}
-              {filtered.length === 0 && (
+              ) : filtered.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan={4}
-                    className="px-6 py-12 text-center text-text-secondary text-sm"
-                  >
+                  <td colSpan={4} className="px-6 py-12 text-center text-text-secondary text-sm">
                     No products found matching your search.
                   </td>
                 </tr>
+              ) : (
+                filtered.map((item) => (
+                  <tr
+                    key={item.id}
+                    className="border-b border-dashed border-borders/60 hover:bg-background/50 transition-colors group"
+                  >
+                    <td className="px-6 py-4 font-medium text-text-primary text-sm">
+                      {item.product}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-text-primary">
+                      <span>{item.perUnitCost.toLocaleString()} Rs</span>
+                    </td>
+                    <td className="px-6 py-4 text-center text-sm">
+                      <span className="font-semibold text-text-primary">
+                        {item.onHand}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-center text-sm">
+                      <span className="font-semibold text-text-primary">
+                        {item.freeToUse}
+                      </span>
+                    </td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>
         </div>
-
-
       </div>
     </div>
   );
